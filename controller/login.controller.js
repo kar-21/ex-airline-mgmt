@@ -62,7 +62,9 @@ getGoogleAccountFromCode = async (code, response) => {
           .status(500)
           .send(`some unexpected/uncaught async exception is thrown ${err}`);
       }
+      let token;
       if (!(await userSchema.findOne({ userId: body.sub }))) {
+        console.log(">>>data creation");
         const userData = new userSchema({
           userId: body.sub,
           emailId: body.email,
@@ -72,15 +74,23 @@ getGoogleAccountFromCode = async (code, response) => {
           role: "staff",
         });
         await userData.save();
+        token = jwt.sign(
+          { userId: body.sub, givenName: body.given_name, role: "staff" },
+          env.env.secret,
+          {
+            expiresIn: "1d",
+          }
+        );
+      } else {
+        const user = await userSchema.findOne({ userId: body.sub });
+        token = jwt.sign(
+          { userId: user.userId, givenName: user.givenName, role: user.role },
+          env.env.secret,
+          {
+            expiresIn: "1d",
+          }
+        );
       }
-
-      const token = jwt.sign(
-        { userId: body.sub, givenName: body.given_name },
-        env.env.secret,
-        {
-          expiresIn: "1d",
-        }
-      );
 
       response.cookie("token", token);
       response.redirect(env.env.frontendAPI);
