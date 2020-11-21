@@ -10,7 +10,10 @@ const PassangerSchema = new mongoose.Schema({
   checkedIn: Boolean,
   wheelChair: Boolean,
   infants: Boolean,
-  ancillaryServices: Boolean,
+  checkinServices: [String],
+  mealType: String,
+  shopItem: [String],
+  inflightServices:[String],
 });
 
 module.exports = mongoose.model("passangerlist", PassangerSchema);

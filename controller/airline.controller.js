@@ -13,6 +13,7 @@ exports.getPassangersOfFlight = async (req, res, next) => {
   res.send(passangers);
 };
 exports.updatePassangerwithKey = async (req, res, next) => {
+  console.log("keyvalue", req.body.keyValuePair);
   await passangerSchema.updateOne(
     {
       passportNumber: req.body.passportNumber,
