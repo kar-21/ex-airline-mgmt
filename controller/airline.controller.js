@@ -6,6 +6,14 @@ exports.getAirlineList = (req, res, next) => {
     res.send(data);
   });
 };
+exports.updateAirlinewithKey = async (req, res, next) => {
+  console.log("keyval", req.body.keyValuePair, req.body.flightNumber);
+  await airlineSchema.updateOne(
+    { flightNumber: req.body.flightNumber },
+    { $set: { ...req.body.keyValuePair } }
+  );
+  res.send({ msg: "success" });
+};
 exports.getPassangersOfFlight = async (req, res, next) => {
   const passangers = await passangerSchema.find({
     flightNumber: req.params.flightNumber,
