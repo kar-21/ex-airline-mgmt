@@ -1,6 +1,9 @@
 const airlineSchema = require("../model/airline.schema");
 const passangerSchema = require("../model/passanger.schema");
 
+exports.checkServer = (req, res, next) => {
+  res.render("index", { title: "Airline Managment express.js" });
+}
 exports.getAirlineList = (req, res, next) => {
   airlineSchema.find().then((data) => {
     res.send(data);

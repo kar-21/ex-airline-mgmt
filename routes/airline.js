@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const airlineController = require("../controller/airline.controller");
 
+router.get("/", airlineController.checkServer)
+
 router.get("/getAirlineList", airlineController.getAirlineList);
 
 router.patch("/updateAirlineList", airlineController.updateAirlinewithKey);
