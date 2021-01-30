@@ -6,12 +6,14 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const env = require("./environments/env.envirornment");
 const indexRouter = require("./routes/login");
 const airlineRouter = require("./routes/airline");
-
 const app = express();
 const port = 3000;
+
+require("dotenv").config({
+  path: path.resolve(__dirname, "./.env"),
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -43,9 +45,9 @@ app.use((err, req, res, next) => {
   res.render("error");
 });
 
-app.listen(port);
+app.listen(process.env.NODE_ENV === "development" ? port : 80);
 
-mongoose.connect(env.env.mongodbAPI, {
+mongoose.connect(process.env.MONGODB_API, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

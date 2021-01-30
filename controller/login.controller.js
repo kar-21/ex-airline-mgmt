@@ -2,7 +2,6 @@ const request = require("request");
 const google = require("googleapis");
 const jwt = require("jsonwebtoken");
 const userSchema = require("../model/user.schema");
-const env = require("../environments/env.envirornment");
 
 exports.loginUrl = (req, res, next) => {
   const message = { redirectURI: urlGoogle() };
@@ -14,9 +13,12 @@ exports.redirectURI = (req, res, next) => {
 };
 
 const googleConfig = {
-  clientId: env.env.google.clientId,
-  clientSecret: env.env.google.clientSecret,
-  redirect: env.env.google.redirect,
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECEET,
+  redirect:
+    process.env.NODE_ENV === "development"
+      ? process.env.GOOGLE_DEV_REDIRECT
+      : process.env.GOOGLE_PROD_REDIRECT,
 };
 
 const defaultScope = [
@@ -76,7 +78,7 @@ getGoogleAccountFromCode = async (code, response) => {
         await userData.save();
         token = jwt.sign(
           { userId: body.sub, givenName: body.given_name, role: "staff" },
-          env.env.secret,
+          process.env.SECRET,
           {
             expiresIn: "1d",
           }
@@ -85,7 +87,7 @@ getGoogleAccountFromCode = async (code, response) => {
         const user = await userSchema.findOne({ userId: body.sub });
         token = jwt.sign(
           { userId: user.userId, givenName: user.givenName, role: user.role },
-          env.env.secret,
+          process.env.SECRET,
           {
             expiresIn: "1d",
           }
@@ -93,7 +95,11 @@ getGoogleAccountFromCode = async (code, response) => {
       }
 
       response.cookie("token", token);
-      response.redirect(env.env.frontendAPI);
+      response.redirect(
+        process.env.NODE_ENV === "development"
+          ? process.env.FRONTEND_DEV_API
+          : prcess.env.FRONTEND_PROD_API
+      );
     }
   );
 };
