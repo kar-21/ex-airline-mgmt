@@ -45,7 +45,7 @@ app.use((err, req, res, next) => {
   res.render("error");
 });
 
-app.listen(process.env.NODE_ENV === "development" ? port : 443);
+app.listen(process.env.NODE_ENV === "development" ? port : 8080);
 
 mongoose.connect(process.env.MONGODB_API, {
   useNewUrlParser: true,
