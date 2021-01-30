@@ -98,7 +98,7 @@ getGoogleAccountFromCode = async (code, response) => {
       response.redirect(
         process.env.NODE_ENV === "development"
           ? process.env.FRONTEND_DEV_API
-          : prcess.env.FRONTEND_PROD_API
+          : process.env.FRONTEND_PROD_API
       );
     }
   );
