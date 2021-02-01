@@ -94,11 +94,10 @@ getGoogleAccountFromCode = async (code, response) => {
         );
       }
 
-      response.cookie("token", token);
       response.redirect(
         process.env.NODE_ENV === "development"
-          ? process.env.FRONTEND_DEV_API
-          : process.env.FRONTEND_PROD_API
+          ? `${process.env.FRONTEND_DEV_API}/tokens?token=${token}`
+          : `${process.env.FRONTEND_PROD_API}/tokens?token=${token}`
       );
     }
   );
