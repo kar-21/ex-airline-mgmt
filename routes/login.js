@@ -6,4 +6,6 @@ router.get('/', loginController.loginUrl);
 
 router.get('/redirectURI', loginController.redirectURI);
 
+router.get('/userInfo/:userId', loginController.getUserInfo)
+
 module.exports = router;

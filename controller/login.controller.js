@@ -12,6 +12,13 @@ exports.redirectURI = (req, res, next) => {
   getGoogleAccountFromCode(req.query.code, res);
 };
 
+exports.getUserInfo = async (req, res, next) => {
+  const userInfo = await userSchema.find({
+    userId: req.params.userId,
+  });
+  res.send(userInfo);
+};
+
 const googleConfig = {
   clientId: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECEET,
