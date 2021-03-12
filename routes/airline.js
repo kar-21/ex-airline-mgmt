@@ -12,4 +12,6 @@ router.get("/getPassangers/:flightNumber", airlineController.getPassangersOfFlig
 
 router.patch("/updatePassanger", airlineController.updatePassangerwithKey);
 
+router.post("/addNewPassanger", airlineController.addNewPassanger);
+
 module.exports = router;

@@ -3,7 +3,7 @@ const passangerSchema = require("../model/passanger.schema");
 
 exports.checkServer = (req, res, next) => {
   res.render("index", { title: "Airline Managment express.js" });
-}
+};
 exports.getAirlineList = (req, res, next) => {
   airlineSchema.find().then((data) => {
     res.send(data);
@@ -33,4 +33,22 @@ exports.updatePassangerwithKey = async (req, res, next) => {
     { $set: { ...req.body.keyValuePair } }
   );
   res.send({ msg: "success" });
+};
+exports.addNewPassanger = async (req, res, next) => {
+  const passanger = new passangerSchema({
+    name: req.body.name,
+    passportNumber: req.body.passportNumber,
+    address: req.body.address,
+    contactNumber: req.body.contactNumber,
+    flightNumber: req.body.flightNumber,
+    seatNumber: req.body.seatNumber,
+    checkedIn: req.body.checkedIn,
+    wheelChair: req.body.wheelChair,
+    infants: req.body.infants,
+    checkinServices: req.body.checkinServices,
+    mealType: req.body.mealType,
+    shopItem: req.body.shopItem,
+    inflightServices: req.body.inflightServices,
+  });
+  await passanger.save();
 };
