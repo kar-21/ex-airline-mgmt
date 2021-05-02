@@ -13,7 +13,8 @@ const PassangerSchema = new mongoose.Schema({
   checkinServices: [String],
   mealType: String,
   shopItem: [String],
-  inflightServices:[String],
+  inflightServices: [String],
+  dateOfBirth: Date,
 });
 
 module.exports = mongoose.model("passangerlist", PassangerSchema);

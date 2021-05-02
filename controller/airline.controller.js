@@ -49,6 +49,7 @@ exports.addNewPassanger = async (req, res, next) => {
     mealType: req.body.mealType,
     shopItem: req.body.shopItem,
     inflightServices: req.body.inflightServices,
+    dateOfBirth: req.body.dateOfBirth,
   });
   await passanger.save();
 };
